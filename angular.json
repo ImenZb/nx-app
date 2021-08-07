@@ -1,6 +1,125 @@
 {
   "version": 1,
   "projects": {
+    "adminshop": {
+      "projectType": "application",
+      "root": "apps/adminshop",
+      "sourceRoot": "apps/adminshop/src",
+      "prefix": "nx-app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/adminshop",
+            "index": "apps/adminshop/src/index.html",
+            "main": "apps/adminshop/src/main.ts",
+            "polyfills": "apps/adminshop/src/polyfills.ts",
+            "tsConfig": "apps/adminshop/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/adminshop/src/favicon.ico",
+              "apps/adminshop/src/assets"
+            ],
+            "styles": ["apps/adminshop/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/adminshop/src/environments/environment.ts",
+                  "with": "apps/adminshop/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "adminshop:build:production"
+            },
+            "development": {
+              "browserTarget": "adminshop:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "adminshop:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/adminshop/src/**/*.ts",
+              "apps/adminshop/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/adminshop"],
+          "options": {
+            "jestConfig": "apps/adminshop/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "adminshop-e2e": {
+      "root": "apps/adminshop-e2e",
+      "sourceRoot": "apps/adminshop-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/adminshop-e2e/cypress.json",
+            "tsConfig": "apps/adminshop-e2e/tsconfig.e2e.json",
+            "devServerTarget": "adminshop:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "adminshop:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/adminshop-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
     "ngshop": {
       "projectType": "application",
       "root": "apps/ngshop",

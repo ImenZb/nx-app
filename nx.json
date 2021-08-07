@@ -27,6 +27,13 @@
     ]
   },
   "projects": {
+    "adminshop": {
+      "tags": []
+    },
+    "adminshop-e2e": {
+      "tags": [],
+      "implicitDependencies": ["adminshop"]
+    },
     "ngshop": {
       "tags": []
     },
